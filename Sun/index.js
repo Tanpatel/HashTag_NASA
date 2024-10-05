@@ -32,7 +32,6 @@ const material = new THREE.MeshPhongMaterial({
 // material.map.colorSpace = THREE.SRGBColorSpace;
 const earthMesh = new THREE.Mesh(geometry, material);
 earthGroup.add(earthMesh);
-earthGroup.position.x = -5;
 const lightsMat = new THREE.MeshBasicMaterial({
   map: loader.load("./textures/sun.png"),
   blending: THREE.AdditiveBlending,
@@ -54,13 +53,13 @@ earthGroup.add(cloudsMesh);
 
 const fresnelMat = getFresnelMat();
 const glowMesh = new THREE.Mesh(geometry, fresnelMat);
-glowMesh.scale.setScalar(1.01);
+glowMesh.scale.setScalar(1);
 earthGroup.add(glowMesh);
 
 const stars = getStarfield({numStars: 2000});
 scene.add(stars);
 
-const sunLight = new THREE.DirectionalLight(0xffffff, 2.0);
+const sunLight = new THREE.DirectionalLight(0xffffff, 1.0);
 sunLight.position.set(-2, 0.5, 1.5);
 scene.add(sunLight);
 
