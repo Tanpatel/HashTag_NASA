@@ -32,7 +32,7 @@ const material = new THREE.MeshPhongMaterial({
 // material.map.colorSpace = THREE.SRGBColorSpace;
 const earthMesh = new THREE.Mesh(geometry, material);
 earthGroup.add(earthMesh);
-
+earthGroup.position.x = -5;
 const lightsMat = new THREE.MeshBasicMaterial({
   map: loader.load("./textures/sun.png"),
   blending: THREE.AdditiveBlending,
