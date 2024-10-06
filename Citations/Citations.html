@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NASA Space Apps Challenge Citations</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #ffd700;
+            --secondary-color: #00ffff;
+            --text-color: #f0f0f0;
+            --bg-color: #000011;
+        }
+        body, html {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        body {
+            background-color: transparent;
+        }
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        .star {
+            position: absolute;
+            background-color: #fff;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: rgba(0, 0, 20, 0.7);
+            opacity: 1;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+            z-index: 2;
+        }
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--primary-color);
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+        h2 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--secondary-color);
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 0.5rem;
+            margin-top: 2rem;
+        }
+        h3 {
+            color: var(--primary-color);
+            margin-top: 1.5rem;
+        }
+        p, ul {
+            margin-bottom: 1rem;
+        }
+        a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        a:hover {
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        li {
+            margin-bottom: 0.5rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        li::before {
+            content: '✦';
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+        }
+        .highlight {
+            background-color: rgba(255, 215, 0, 0.1);
+            padding: 0.5rem;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .highlight:hover {
+            background-color: rgba(255, 215, 0, 0.2);
+        }
+        .logo-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        .logo {
+            max-width: 150px;
+            height: auto;
+        }
+        .music-control {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: var(--primary-color);
+            color: #000;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .music-control:hover {
+            background-color: var(--secondary-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="stars"></div>
+    <div class="container">
+        <div class="logo-container">
+            <img src="./NASA_logo.svg" alt="Space Apps Challenge Logo" class="logo">
+            <img src="./Space Apps Challenge Logo.png" alt="Space Apps Challenge Logo" class="logo">
+        </div>
+        <!-- Audio element for background music -->
+        <audio id="background-audio" autoplay loop muted>
+            <source src="your-audio-file.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+
+        <!-- Button to toggle music
+        <button class="music-control" onclick="toggleMusic()">Music Off</button>
+        <h1>Solar Project Citations</h1> -->
+
+        <h2>Citations</h2>
+
+        <h3>Solar Dynamics Observatory (SDO) Images and Data</h3>
+        <p class="highlight">"Courtesy of NASA/SDO and the AIA, EVE, and HMI science teams."</p>
+        <p>We utilized SDO images and data to visualize solar activity and analyze solar phenomena for the time period 10th to 14th May 2024 through videos in various wavelengths.</p>
+
+        <h3>Solar Wind Information</h3>
+        <p>NASA. (2024). <a href="https://omniweb.gsfc.nasa.gov/ow.html" target="_blank">Solar Wind Magnetic Field and Plasma Data at L1</a>. Goddard's Space Physics Data Facility.</p>
+        <p>This data was crucial for understanding solar wind patterns for simulations and creating fun songs and bgm.</p>
+
+        <h3>Canadian Space Agency Resources</h3>
+        <p><a href="https://www.asc-csa.gc.ca/eng/sciences/solar-terrestrial.asp" target="_blank">Canadian Space Agency</a>. (2024). Solar-Terrestrial Science.</p>
+        <p><a href="https://www.asc-csa.gc.ca/eng/sciences/geospace-observatory-canada-initiative.asp" target="_blank">Canadian Space Agency</a>. (2024). Geospace Observatory (GO) Canada: Monitoring and Predicting Space Weather.</p>
+        <p>We referenced these resources to gain insights into solar-terrestrial interactions and space weather prediction methods to make sure the model is efficient and accurate enough to run on browsers.</p>
+
+        <h3>CASSIOPE Spacecraft</h3>
+        <p><a href="https://www.asc-csa.gc.ca/eng/satellites/cassiope.asp" target="_blank">Canadian Space Agency</a>. (2024). CASSIOPE Spacecraft.</p>
+        <p>Information about the CASSIOPE spacecraft helped us understand how space-based instruments collect data on the ionosphere and space weather to remove the noises for data sonifications.</p>
+
+        <h3>Citizen Science Project</h3>
+        <p><a href="https://aurorasaurus.org/" target="_blank">NASA</a>. (2024). Aurorasaurus.</p>
+        <p>We incorporated citizen science data from Aurorasaurus to enhance our understanding of aurora occurrences for 3D model simulations.</p>
+
+        <h2>Data Usage and Acknowledgments</h2>
+        <p class="highlight">The Solar Dynamics Observatory (SDO) images and movies used in this project are not copyrighted and have been used for non-commercial, educational purposes. As requested by NASA, proper attribution has been given to the source of these images and data.</p>
+
+        <h2>Additional Resources</h2>
+        <p>The following resources provided supplementary information and data that contributed to the depth and accuracy of our project:</p>
+        <ul>
+          <li><a href="https://sdo.gsfc.nasa.gov/data/synoptic/" target="_blank">SDO data and synoptic maps</a></li>
+          <li><a href="https://sdo.gsfc.nasa.gov/data/aiahmi/" target="_blank">AIA/HMI Browse Data</a></li>
+          <li><a href="https://umbra.nascom.nasa.gov/images/latest.html" target="_blank">Current solar images at SDAC</a></li>
+          <li><a href="https://solarsystem.nasa.gov/solar-system/sun/overview/" target="_blank">NASA's Basic Facts About the Sun</a></li>
+          <li><a href="https://www.nasa.gov/science-research/heliophysics/how-scientists-around-the-world-track-the-solar-cycle/" target="_blank">How Scientists Around the World Track the Solar Cycle</a></li>
+          <li><a href="https://earthobservatory.nasa.gov/images/152815/historic-geomagnetic-storm-dazzles" target="_blank">Historic Geomagnetic Storm Dazzles</a></li>
+          <li><a href="https://www.nasa.gov/technology/five-questions-about-space-weather-and-its-effects-on-earth-answered/" target="_blank">Five Questions About Space Weather and Its Effects on Earth, Answered</a></li>
+          <li><a href="https://nasa3d.arc.nasa.gov/detail/magnetosphere-model" target="_blank">Magnetosphere | 3D Resources</a></li>
+      </ul>
+ 
+    </div>
+
+    <script>
+      function createStars() {
+          const stars = document.querySelector('.stars');
+          for (let i = 0; i < 200; i++) {
+              const star = document.createElement('div');
+              star.className = 'star';
+              const size = Math.random() * 3;
+              star.style.width = `${size}px`;
+              star.style.height = `${size}px`;
+              star.style.left = `${Math.random() * 100}%`;
+              star.style.top = `${Math.random() * 100}%`;
+              star.style.animationDuration = `${Math.random() * 3 + 2}s`;
+              star.style.animationDelay = `${Math.random() * 3}s`;
+              stars.appendChild(star);
+          }
+      }
+      createStars();
+
+
+    function toggleMusic() {
+        var audio = document.getElementById("background-audio");
+        if (audio.muted) {
+            audio.muted = false; // Unmute the audio
+            document.querySelector('.music-control').innerText = "Music Off"; // Change button text
+        } else {
+            audio.muted = true; // Mute the audio
+            document.querySelector('.music-control').innerText = "Music On"; // Change button text
+        }
+    }
+    </script>
+</body>
+</html>

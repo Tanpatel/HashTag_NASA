@@ -181,7 +181,6 @@ function switchTextures() {
       scene.remove(currentCurves); // Remove old curves
       currentCurves = createCurvesForState(1); // Create curves for the second state
       sunGroup.add(currentCurves);
-
       textureState = 1; // Update state
   } else if (textureState === 1 && now >= switchDelay2) {
       // Switch to third texture
@@ -206,20 +205,41 @@ function switchTextures() {
   }
 }
 
+// Audio setup
+const listener = new THREE.AudioListener();
+camera.add(listener);
 
+const flareSound = new THREE.Audio(listener);
+const audioLoader = new THREE.AudioLoader();
+audioLoader.load('/Users/tanhapatel/Desktop/2DPlatformerUnity/HashTag_NASA/Sun/magnetic field sound.mp3', function(buffer) {
+    flareSound.setBuffer(buffer);
+    flareSound.setVolume(0.5);
+    flareSound.play();
+});
+
+// Existing animate function
 function animate() {
     requestAnimationFrame(animate);
 
+    // Your existing rotation code
     earthMesh.rotation.y += 0.002;
     lightsMesh_earth.rotation.y += 0.002;
     cloudsMesh.rotation.y += 0.0023;
     glowMesh.rotation.y += 0.002;
     stars.rotation.y -= 0.0002;
 
-
     // Rotate the flare mesh for a dynamic effect
     flareMesh.position.y -= 30;
-    flareMesh.position.x -=30;
+    flareMesh.position.x -= 30;
+
+    // Check if flare is close to the Earth to play sound
+    const distanceToEarth = flareMesh.position.distanceTo(earthGroup.position);
+    if (distanceToEarth < 1 && !flareSound.isPlaying) {
+        flareSound.play(); // Play the sound when close to the Earth
+    } else if (distanceToEarth >= 1 && flareSound.isPlaying) {
+      flareSound.stop(); // Stop the sound when the flare moves away
+  }
+
 
     // Check if it's time to switch the textures
     switchTextures();
@@ -227,8 +247,9 @@ function animate() {
     renderer.render(scene, camera);
 }
 
-
 animate();
+
+
 
 
 function addAurora(px1, px2) {
