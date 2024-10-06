@@ -6,7 +6,7 @@ import { getFresnelMat } from "./src/getFresnelMat.js";
 
 const w = window.innerWidth;
 const h = window.innerHeight;
-var particleCount = 15; 
+var particleCount = 15;
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, w / h, 0.1, 1000);
 camera.position.z = 7;
@@ -167,43 +167,45 @@ const switchDelay1 = 5000; // First delay (5 seconds)
 const switchDelay2 = 10000; // Second delay (10 seconds)
 
 function switchTextures() {
-    const now = performance.now();
-    if (textureState === 0 && now >= switchDelay1) {
-        // Switch to second texture
-        sunMesh.material.map = sunTexture2;
-        lightsMesh.material.map = sunTexture2;
-        // cloudsMesh.material.map = sunTexture2;
-        flareMesh.material.map = flareTexture2;
+  const now = performance.now();
+  if (textureState === 0 && now >= switchDelay1) {
+      // Switch to second texture
+      sunMesh.material.map = sunTexture2;
+      lightsMesh.material.map = sunTexture2;
+      flareMesh.material.map = flareTexture2;
 
-        sunMesh.material.needsUpdate = true;
-        lightsMesh.material.needsUpdate = true;
-        // cloudsMesh.material.needsUpdate = true;
-        flareMesh.material.needsUpdate = true;
+      sunMesh.material.needsUpdate = true;
+      lightsMesh.material.needsUpdate = true;
+      flareMesh.material.needsUpdate = true;
 
-        scene.remove(currentCurves); // Remove old curves
-        currentCurves = createCurvesForState(1); // Create curves for the second state
-        sunGroup.add(currentCurves);
+      scene.remove(currentCurves); // Remove old curves
+      currentCurves = createCurvesForState(1); // Create curves for the second state
+      sunGroup.add(currentCurves);
 
-        textureState = 1; // Update state
-    } else if (textureState === 1 && now >= switchDelay2) {
-        // Switch to third texture
-        sunMesh.material.map = sunTexture3;
-        lightsMesh.material.map = sunTexture3;
-        // cloudsMesh.material.map = sunTexture3;
-        flareMesh.material.map = flareTexture3;
+      textureState = 1; // Update state
+  } else if (textureState === 1 && now >= switchDelay2) {
+      // Switch to third texture
+      sunMesh.material.map = sunTexture3;
+      lightsMesh.material.map = sunTexture3;
+      flareMesh.material.map = flareTexture3;
 
-        sunMesh.material.needsUpdate = true;
-        lightsMesh.material.needsUpdate = true;
-        // cloudsMesh.material.needsUpdate = true;
-        flareMesh.material.needsUpdate = true;
+      sunMesh.material.needsUpdate = true;
+      lightsMesh.material.needsUpdate = true;
+      flareMesh.material.needsUpdate = true;
 
-        scene.remove(currentCurves); // Remove old curves
-        currentCurves = createCurvesForState(2); // Create curves for the third state
-        sunGroup.add(currentCurves);
+      scene.remove(currentCurves); // Remove old curves
+      currentCurves = createCurvesForState(2); // Create curves for the third state
+      sunGroup.add(currentCurves);
 
-        textureState = 2; // Final state, no further switching
-    }
+      textureState = 2; // Update state
+
+      // Refresh the page after the third texture transition
+      setTimeout(() => {
+          window.location.reload();
+      }, 3000); // Delay for 2 seconds before refresh (adjust as needed)
+  }
 }
+
 
 function animate() {
     requestAnimationFrame(animate);
@@ -315,7 +317,7 @@ scene.add(magneticField);
 
 
 function createSolarWinds() {
- 
+
   const particleMaterial = new THREE.PointsMaterial({
       size: 0.05, // Size of the particles
       color: 0xffff00, // Yellow color for solar winds
@@ -382,7 +384,7 @@ function createSolarWinds() {
           const distance = Math.sqrt(x * x + y * y + z * z);
 
           // Check if the particle is near or inside the magnetic sphere
-          if (distance < magnetosphereRadius) { 
+          if (distance < magnetosphereRadius) {
               // Particle is inside or near the magnetic sphere
 
               // Calculate the normal vector at the point of interaction
