@@ -80,18 +80,65 @@ const flareMaterial = new THREE.MeshBasicMaterial({
     opacity: 0,
     depthWrite: false,
 });
-
 const flareMesh = new THREE.Mesh(flareGeometry, flareMaterial);
 flareMesh.position.set(0, 0, 0); // Position at the center of the sun
-flareMesh.rotation.x = -Math.PI / 2; // Rotate to face the camera
+flareMesh.rotation.x = 0; // Keep this horizontal (no rotation upwards)
+flareMesh.rotation.y = Math.PI / 2; // Rotate on the y-axis for horizontal effect
 earthGroup.add(flareMesh); // Add to the sun group
+
+// Curve generation functions
+function create3DCurve(startPosition, controlPoint1, controlPoint2, endPosition) {
+    const curve = new THREE.CatmullRomCurve3([
+        startPosition,
+        controlPoint1,
+        controlPoint2,
+        endPosition
+    ]);
+
+    const points = curve.getPoints(1000);
+    const geometry = new THREE.BufferGeometry().setFromPoints(points);
+    const material = new THREE.LineBasicMaterial({ color: 0xffd700, linewidth: 2 });
+
+    return new THREE.Line(geometry, material);
+}
+
+function createCurvesForState(state) {
+  const curveGroup = new THREE.Group();
+  const offsetX = 0; // Offset distance to the right of the object
+  const startPos = earthMesh.position.clone().add(new THREE.Vector3(earthMesh.position.x, earthMesh.position.y-1.02, earthMesh.position.z)); // Move right of the sun
+  const endPos = earthMesh.position.clone().add(new THREE.Vector3(earthMesh.position.x-0.2, earthMesh.position.y+0.9, earthMesh.position.z)); // Move right of the sun
+
+  let controlPoint1, controlPoint2;
+
+  if (state === 0) {
+      controlPoint1 = new THREE.Vector3(earthMesh.position.x +2, earthMesh.position.y + 0.1, earthMesh.position.z);
+      controlPoint2 = new THREE.Vector3(earthMesh.position.x +1.5, earthMesh.position.y + 1.5, earthMesh.position.z);
+  } else if (state === 1) {
+      controlPoint1 = new THREE.Vector3(earthMesh.position.x + 3.3, earthMesh.position.y + 0.5, earthMesh.position.z);
+      controlPoint2 = new THREE.Vector3(earthMesh.position.x + 2.5, earthMesh.position.y + 2.3, earthMesh.position.z);
+  } else if (state === 2) {
+      controlPoint1 = new THREE.Vector3(earthMesh.position.x + 4.6, earthMesh.position.y + 1, earthMesh.position.z);
+      controlPoint2 = new THREE.Vector3(earthMesh.position.x + 3.4, earthMesh.position.y + 3.5, earthMesh.position.z);
+  }
+
+  const curve = create3DCurve(startPos, controlPoint1, controlPoint2, endPos);
+  curveGroup.add(curve);
+
+  return curveGroup;
+}
+
+
+
+let currentCurves = createCurvesForState(0); // Initial curve set for first animation
+earthGroup.add(currentCurves);
 
 let textureState = 0; // Track the texture state
 const switchDelay1 = 5000; // First delay (5 seconds)
 const switchDelay2 = 10000; // Second delay (10 seconds)
 
 function switchTextures() {
-    if (textureState === 0 && performance.now() >= switchDelay1) {
+    const now = performance.now();
+    if (textureState === 0 && now >= switchDelay1) {
         // Switch to second texture
         earthMesh.material.map = sunTexture2;
         lightsMesh.material.map = sunTexture2;
@@ -103,8 +150,12 @@ function switchTextures() {
         cloudsMesh.material.needsUpdate = true;
         flareMesh.material.needsUpdate = true;
 
+        scene.remove(currentCurves); // Remove old curves
+        currentCurves = createCurvesForState(1); // Create curves for the second state
+        earthGroup.add(currentCurves);
+
         textureState = 1; // Update state
-    } else if (textureState === 1 && performance.now() >= switchDelay2) {
+    } else if (textureState === 1 && now >= switchDelay2) {
         // Switch to third texture
         earthMesh.material.map = sunTexture3;
         lightsMesh.material.map = sunTexture3;
@@ -115,6 +166,10 @@ function switchTextures() {
         lightsMesh.material.needsUpdate = true;
         cloudsMesh.material.needsUpdate = true;
         flareMesh.material.needsUpdate = true;
+
+        scene.remove(currentCurves); // Remove old curves
+        currentCurves = createCurvesForState(2); // Create curves for the third state
+        earthGroup.add(currentCurves);
 
         textureState = 2; // Final state, no further switching
     }
@@ -130,7 +185,8 @@ function animate() {
     stars.rotation.y -= 0.0002;
 
     // Rotate the flare mesh for a dynamic effect
-    flareMesh.rotation.z += 0.01;
+    flareMesh.position.y -= 30;
+    flareMesh.position.x -=30;
 
     // Check if it's time to switch the textures
     switchTextures();
