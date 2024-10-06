@@ -8,7 +8,7 @@ const w = window.innerWidth;
 const h = window.innerHeight;
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, w / h, 0.1, 1000);
-camera.position.z = 5;
+camera.position.z = 10;
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(w, h);
 document.body.appendChild(renderer.domElement);
@@ -32,6 +32,7 @@ const material = new THREE.MeshPhongMaterial({
 // material.map.colorSpace = THREE.SRGBColorSpace;
 const earthMesh = new THREE.Mesh(geometry, material);
 earthGroup.add(earthMesh);
+earthGroup.position.x = 5
 
 const lightsMat = new THREE.MeshBasicMaterial({
   map: loader.load("./textures/03_earthlights1k.jpg"),
@@ -97,74 +98,67 @@ function addAurora() {
   earthGroup.add(southernAuroraMesh);
 }
 
-function createMagnetosphereAnimation(earthGroup) {
-  const ringCount = 5; // Number of rings
-  const ringMaterial = new THREE.MeshBasicMaterial({
-      color: 0x808080, // Gray color for the magnetosphere rings
-      opacity: 0.6,
-      transparent: true,
-  });
+// Magnetic Field Functions
+function createMagneticFieldLine(startLat, startLng, endLat, endLng, baseRadius, numPoints = 100) {
+  const points = [];
+  for (let i = 0; i <= numPoints; i++) {
+      const t = i / numPoints;
+      const lat = startLat + t * (endLat - startLat);
+      const lng = startLng + t * (endLng - startLng);
 
-  // Create an array to hold the magnetic rings
-  let magneticRings = [];
+      // Convert to 3D coordinates
+      const phi = (90 - lat) * Math.PI / 180;
+      const theta = (lng + 180) * Math.PI / 180;
 
-  // Create the initial rings
-  for (let i = 0; i < ringCount; i++) {
-      const radius = 1.5 + i * 0.15; // Radius of the ring
-      const tubeRadius = 0.02; // Thickness of the ring
+      // Calculate radius to create a curvier line
+      const r = baseRadius * (1 + 0.5 * Math.sin(Math.PI * t) * (1 - t));
 
-      // Create torus geometry for horizontal rings
-      const torusGeometry = new THREE.TorusGeometry(radius, tubeRadius, 16, 100);
-      
-      // Create a mesh for the torus
-      const torusMesh = new THREE.Mesh(torusGeometry, ringMaterial);
-      
-      // Position the ring to come out of the Earth
-      torusMesh.position.y = 0; // Centered vertically
-      magneticRings.push(torusMesh); // Add to array
-      earthGroup.add(torusMesh); // Add to the earthGroup
+      const x = -r * Math.sin(phi) * Math.cos(theta);
+      const y = r * Math.cos(phi);
+      const z = r * Math.sin(phi) * Math.sin(theta);
+
+      points.push(new THREE.Vector3(x, y, z));
   }
 
-  // Function to simulate the bending of rings during a solar storm
-  const simulateSolarStorm = () => {
-      const stormDuration = 5000; // Duration of the solar storm in milliseconds
-      const startTime = Date.now();
+  // Create TubeGeometry for thickness
+  const curve = new THREE.CatmullRomCurve3(points);
+  const geometry = new THREE.TubeGeometry(curve, numPoints, 0.02, 8); // Adjust the radius here for thickness
+  const material = new THREE.MeshBasicMaterial({
+      color: 0xf0f0f0,
+      transparent: true,
+      opacity: 0.7
+  });
 
-      const animateStorm = () => {
-          const elapsed = Date.now() - startTime;
-
-          // Calculate the intensity of the solar storm effect
-          const intensity = Math.min(elapsed / stormDuration, 1);
-
-          magneticRings.forEach((ring, index) => {
-              const bendFactor = Math.sin((elapsed / 500) + index) * (0.1 * intensity); // Bend effect
-              ring.scale.y = 1 - bendFactor; // Change height to simulate bending
-              ring.scale.x = 1 + bendFactor; // Widening effect to simulate distortion
-              ring.position.y = -bendFactor * 0.5; // Shift downward slightly
-          });
-
-          if (elapsed < stormDuration) {
-              requestAnimationFrame(animateStorm);
-          } else {
-              resetMagnetosphere(magneticRings); // Reset the rings after the storm
-              setTimeout(simulateSolarStorm, 2000); // Wait for 2 seconds, then start the storm again
-          }
-      };
-
-      animateStorm(); // Start the animation
-  };
-
-  // Function to reset the magnetosphere rings
-  const resetMagnetosphere = (rings) => {
-      rings.forEach((ring) => {
-          ring.scale.set(1, 1, 1); // Reset scale
-          ring.position.y = 0; // Reset position
-      });
-  };
-
-  // Start the first solar storm simulation after 2 seconds
-  setTimeout(simulateSolarStorm, 2000);
+  return new THREE.Mesh(geometry, material); // Change Line to Mesh
 }
+
+//numLayers: number of layers of fields, more layer means more curved fields
+//linesPerLayers: num of field lines in each layer
+function generateMagneticField(numLayers = 3, linesPerLayer = 7) {
+  const fieldLines = new THREE.Group();
+
+  for (let layer = 0; layer < numLayers; layer++) {
+      const baseRadius = 1 + layer * 0.5; // Increased spacing between layers
+      for (let i = 0; i < linesPerLayer; i++) {
+          const startLng = (i / linesPerLayer) * 360 - 180;
+          const endLng = (startLng + 180) % 360 - 180;
+
+          // Vary the start and end latitudes based on the layer
+          const startLat = 90 - layer * 20; // Increased variation
+          const endLat = -90 + layer * 20; // Increased variation
+
+          const fieldLine = createMagneticFieldLine(startLat, startLng, endLat, endLng, baseRadius);
+          fieldLine.position.set(earthGroup.position.x, earthGroup.position.y, earthGroup.position.z); // Center the field lines with the Earth
+          fieldLines.add(fieldLine);
+      }
+  }
+
+  return fieldLines;
+}
+
+// Generate and add magnetic field to the scene
+const magneticField = generateMagneticField();
+scene.add(magneticField);
 
 
 function createSolarWinds() {
@@ -255,7 +249,7 @@ function createSolarWinds() {
 
               // Update the particle's velocity with the deviated velocity
               velocities[i * 3] = deviated.vx * 1.0008;
-              velocities[i * 3 + 1] = deviated.vy * 1.094;
+              velocities[i * 3 + 1] = deviated.vy * 1.0094;
               velocities[i * 3 + 2] = deviated.vz;
           }
 
@@ -285,8 +279,8 @@ function createSolarWinds() {
 createSolarWinds();
 
 
-// Call the function and pass the earthGroup to it
-createMagnetosphereAnimation(earthGroup);
+// // Call the function and pass the earthGroup to it
+// createMagnetosphereAnimation(earthGroup);
 
 addAurora();
 animate();
@@ -297,3 +291,7 @@ function handleWindowResize () {
   renderer.setSize(window.innerWidth, window.innerHeight);
 }
 window.addEventListener('resize', handleWindowResize, false);
+
+
+
+
