@@ -34,7 +34,7 @@ const material = new THREE.MeshPhongMaterial({
 // material.map.colorSpace = THREE.SRGBColorSpace;
 const earthMesh = new THREE.Mesh(geometry, material);
 earthGroup.add(earthMesh);
-earthGroup.position.x = 3;
+earthGroup.position.x = 5;
 
 const lightsMat = new THREE.MeshBasicMaterial({
   map: loader.load("./textures/03_earthlights1k.jpg"),
@@ -257,8 +257,8 @@ function createSolarWinds() {
               );
 
               // Update the particle's velocity with the deviated velocity
-              velocities[i * 3] = deviated.vx * 1.00000008;
-              velocities[i * 3 + 1] = deviated.vy * 1.042;
+              velocities[i * 3] = deviated.vx * 1.0008;
+              velocities[i * 3 + 1] = deviated.vy * 1.1008;
               velocities[i * 3 + 2] = deviated.vz;
           }
 
