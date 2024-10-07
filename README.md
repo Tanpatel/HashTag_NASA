@@ -56,63 +56,59 @@ The following equations form the core of our model, describing the journey of so
 
 1. **Particle Motion in Magnetic Fields**:
 
-   - Radius of Curvature: 
+   - Radius of Curvature:
      $$
      r = \frac{mv}{qB}
      $$
-   - Period of Circular Motion: 
+   - Period of Circular Motion:
      $$
      T = \frac{2\pi m}{qB}
      $$
-   - Pitch of Helical Motion: 
+   - Pitch of Helical Motion:
      $$
      p = v_{para} T
      $$
 2. **Solar Wind and Orbital Dynamics**:
 
-   - Orbital Velocity: 
+   - Orbital Velocity:
      $$
      v = \sqrt{\frac{GM}{R}}
      $$
-   - Kepler's Third Law: 
+   - Kepler's Third Law:
      $$
      \frac{T^2}{R^3} = \frac{4\pi^2}{GM}
      $$
-   - Solar Wind Pressure: 
+   - Solar Wind Pressure:
      $$
      P_{sw} = \rho v^2
      $$
 3. **Earth's Magnetosphere**:
 
-   - Dipole Magnetic Field: 
+   - Dipole Magnetic Field:
      $$
      B(r,λ) = \frac{B_0}{r^3}\sqrt{1 + 3\sin^2λ}
      $$
-   - Magnetopause Standoff Distance: 
+   - Magnetopause Standoff Distance:
      $$
      R_{mp} = \left(\frac{B_E^2}{2μ_0 P_{sw}}\right)^{1/6} R_E
      $$
 4. **Particle-Field Interactions**:
 
-   - Lorentz Force: 
+   - Lorentz Force:
      $$
      \vec{F} = q(\vec{E} + \vec{v} \times \vec{B})
      $$
-   - Path Length in Turbulent Field: 
+   - Path Length in Turbulent Field:
      $$
      L = \int \sqrt{1 + \left(\frac{\delta B_x}{B_0}\right)^2 + \left(\frac{\delta B_y}{B_0}\right)^2} ds
      $$
-
-These equations collectively describe the complex interplay between solar particles, interplanetary magnetic fields, and Earth's magnetosphere. They account for the initial ejection from the Sun, the journey through space, and the eventual interaction with Earth's magnetic field.
-
-Our model uses simplified versions of these formulas to simulate the trajectory of solar particles, capturing the essence of space weather phenomena from solar flares to geomagnetic storms. This mathematical framework allowed us to visualize and understand the intricate dance of charged particles in the vast arena of our solar system.
 
 ## Team Name: Hashtag
 
 * **Tanha Patel**: 4th Year Computer Science Honours [LinkedIn Profile](https://www.linkedin.com/in/tanha-patel-0691ab22a/)
 * **Krisha Bhalala**: 3rd Year Computer Science Honours [LinkedIn Profile](https://www.linkedin.com/in/krisha-bhalala-b2298323a/)
 * **Hrutil Patel**: 4th Year Computer Science Honours [LinkedIn Profile](https://www.linkedin.com/in/hrutil-patel-1a7a08260/)
-* **Krish Bhalala**: 3rd Year Computer Science Honours [LinkedIn Profile](https://github.com/Krish-Bhalala https://www.linkedin.com/in/krishbhalala/)
+* **Krish Bhalala**: 3rd Year Computer Science Honours [LinkedIn Profile](https://www.linkedin.com/in/krishbhalala/)
 
 ## Acknowledgments
 
