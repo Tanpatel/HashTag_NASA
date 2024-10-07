@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-SolarFlare Explorer is an interactive 3D visualization of solar flare activity and its impact on Earth's magnetosphere, created for the NASA Space Apps 2024 Challenge. This hackathon, held over 48 hours, challenged teams to utilize NASA data to develop innovative solutions that educate the public about space weather events, specifically the solar storms that occurred in May 2024.
+HashTag NASA is an interactive 3D visualization of solar flare activity and its impact on Earth's magnetosphere, created for the NASA Space Apps 2024 Challenge. This hackathon, held over 48 hours, challenged teams to utilize NASA data to develop innovative solutions that educate the public about space weather events, specifically the solar storms that occurred in May 2024.
 
 ## Features
 
