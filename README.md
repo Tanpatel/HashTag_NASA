@@ -56,52 +56,22 @@ The following equations form the core of our model, describing the journey of so
 
 1. **Particle Motion in Magnetic Fields**:
 
-   - Radius of Curvature:
-     $$
-     r = \frac{mv}{qB}
-     $$
-   - Period of Circular Motion:
-     $$
-     T = \frac{2\pi m}{qB}
-     $$
-   - Pitch of Helical Motion:
-     $$
-     p = v_{para} T
-     $$
+   - Radius of Curvature: `r = mv / (qB)`
+   - Period of Circular Motion: `T = 2πm / (qB)`
+   - Pitch of Helical Motion: `p = v_para * T`
 2. **Solar Wind and Orbital Dynamics**:
 
-   - Orbital Velocity:
-     $$
-     v = \sqrt{\frac{GM}{R}}
-     $$
-   - Kepler's Third Law:
-     $$
-     \frac{T^2}{R^3} = \frac{4\pi^2}{GM}
-     $$
-   - Solar Wind Pressure:
-     $$
-     P_{sw} = \rho v^2
-     $$
+   - Orbital Velocity: `v = sqrt(GM / R)`
+   - Kepler's Third Law: `T^2 / R^3 = 4π^2 / (GM)`
+   - Solar Wind Pressure: `P_sw = ρv^2`
 3. **Earth's Magnetosphere**:
 
-   - Dipole Magnetic Field:
-     $$
-     B(r,λ) = \frac{B_0}{r^3}\sqrt{1 + 3\sin^2λ}
-     $$
-   - Magnetopause Standoff Distance:
-     $$
-     R_{mp} = \left(\frac{B_E^2}{2μ_0 P_{sw}}\right)^{1/6} R_E
-     $$
+   - Dipole Magnetic Field: `B(r, λ) = (B_0 / r^3) * sqrt(1 + 3sin^2(λ))`
+   - Magnetopause Standoff Distance: `R_mp = (B_E^2 / (2μ_0 * P_sw))^(1/6) * R_E`
 4. **Particle-Field Interactions**:
 
-   - Lorentz Force:
-     $$
-     \vec{F} = q(\vec{E} + \vec{v} \times \vec{B})
-     $$
-   - Path Length in Turbulent Field:
-     $$
-     L = \int \sqrt{1 + \left(\frac{\delta B_x}{B_0}\right)^2 + \left(\frac{\delta B_y}{B_0}\right)^2} ds
-     $$
+   - Lorentz Force: `F = q(E + v × B)`
+   - Path Length in Turbulent Field: `L = ∫ sqrt(1 + (δB_x/B_0)^2 + (δB_y/B_0)^2) ds`
 
 ## Team Name: Hashtag
 
