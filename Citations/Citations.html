@@ -215,11 +215,13 @@
         if (audio.muted) {
             audio.muted = false; // Unmute the audio
             document.querySelector('.music-control').innerText = "Music Off"; // Change button text
-        } else {
+        } 
+        /* else {
             audio.muted = true; // Mute the audio
             document.querySelector('.music-control').innerText = "Music On"; // Change button text
-        }
+        } */
     }
+    toggleMusic()
     </script>
 </body>
 </html>
